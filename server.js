@@ -38,20 +38,26 @@ app.use(cookieParser());                 // Allow cookies (JWT refresh tokens)
 
 // CORS: restrict to allowed origins
 const allowedOrigins = [
-  'https://0f648777.focus-gps-frontends.pages.dev/',            // ✅ optional prod frontend URL
+  'https://0f648777.focus-gps-frontends.pages.dev',
+  'https://focus-gps-frontends.pages.dev',
+  'http://localhost:3000',
 ];
+
+
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin like mobile apps or curl
       if (!origin || allowedOrigins.includes(origin)) {
-        return callback(null, true);
+        callback(null, true);
+      } else {
+        console.log("❌ BLOCKED CORS ORIGIN:", origin);
+        callback(new Error("Not allowed by CORS"));
       }
-      return callback(new Error('CORS not allowed by policy'));
     },
     credentials: true,
   })
 );
+
 
 // Limit repeated requests to public APIs
 const limiter = rateLimit({
