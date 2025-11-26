@@ -91,11 +91,12 @@ if (process.env.NODE_ENV === 'production') {
   const clientBuildPath = path.join(__dirname, '../frontend/dist');
   app.use(express.static(clientBuildPath));
 
-  // catch-all for React Router
-  app.get('/*', (_, res) => {
+  // Express 5: use RegExp instead of "*"
+  app.get(/.*/, (_, res) => {
     res.sendFile(path.join(clientBuildPath, 'index.html'));
   });
 }
+
 
 
 /* ---------------------------------------------------------------------- */
