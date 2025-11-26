@@ -87,15 +87,15 @@ app.get('/api/health', (req, res) => {
 /* ---------------------------------------------------------------------- */
 /* Serve Frontend (if deployed together, e.g. Heroku / Render / Vercel)  */
 /* ---------------------------------------------------------------------- */
-if (process.env.NODE_ENV === 'production') {
-  const clientBuildPath = path.join(__dirname, '../frontend/dist');
-  app.use(express.static(clientBuildPath));
-
-  // Express 5: use RegExp instead of "*"
-  app.get(/.*/, (_, res) => {
-    res.sendFile(path.join(clientBuildPath, 'index.html'));
+if (process.env.NODE_ENV === "production") {
+  console.log("⚠️ Skipping frontend serving in production");
+} else {
+  app.use(express.static(path.join(__dirname, "frontend/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend/dist/index.html"));
   });
 }
+
 
 
 
