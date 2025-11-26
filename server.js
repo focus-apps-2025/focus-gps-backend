@@ -38,10 +38,7 @@ app.use(cookieParser());                 // Allow cookies (JWT refresh tokens)
 
 // CORS: restrict to allowed origins
 const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:3000',
-  'http://localhost:8080',
-  process.env.FRONTEND_URL,             // ✅ optional prod frontend URL
+  'https://0f648777.focus-gps-frontends.pages.dev/',            // ✅ optional prod frontend URL
 ];
 app.use(
   cors({
