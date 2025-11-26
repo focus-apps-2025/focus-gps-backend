@@ -1,12 +1,19 @@
+// backend/Routes/authRoutes.js
 const express = require('express');
-const { loginUser, getUserProfile } = require('../controllers/authController');
-const { protect } = require('../middleware/auth');
 const router = express.Router();
+const { protect } = require('../middleware/auth');
+const { 
+    loginUser, 
+    getUserProfile, 
+    refreshAccessToken, 
+    logoutUser, 
+    validateLogin // *** IMPORT validateLogin ***
+} = require('../controllers/authController');
 
-// Public route for login
-router.post('/login', loginUser);
-
-// Private route for getting logged-in user's profile
+// *** CHANGE: Add validateLogin middleware to the login route ***
+router.post('/login', validateLogin, loginUser);
 router.get('/profile', protect, getUserProfile);
+router.post('/refresh', refreshAccessToken);
+router.post('/logout', logoutUser);
 
 module.exports = router;
